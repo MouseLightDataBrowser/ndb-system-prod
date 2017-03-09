@@ -13,6 +13,7 @@ services:
       - mq_data:/var/lib/rabbitmq
     networks:
       - back_tier
+
   sample-db:
     image: postgres:9
     container_name: "ndb_sample_db"
@@ -27,6 +28,7 @@ services:
       - ./datastore/sample:/docker-entrypoint-initdb.d
     networks:
       - back_tier
+
   swc-db:
     image: postgres:9
     container_name: "ndb_swc_db"
@@ -41,6 +43,7 @@ services:
       - ./datastore/swc:/docker-entrypoint-initdb.d
     networks:
       - back_tier
+
   transform-db:
     image: postgres:9
     container_name: "ndb_transform_db"
@@ -53,6 +56,15 @@ services:
     volumes:
       - transform_data:/var/lib/postgresql/data
       - ./datastore/transform:/docker-entrypoint-initdb.d
+    networks:
+      - back_tier
+
+  transform-api:
+    image: mouselightdatabrowser/transform-api
+    container_name: "ndb_transform_api"
+    hostname: transform-api
+    ports:
+      - 9661:9661
     networks:
       - back_tier
 
