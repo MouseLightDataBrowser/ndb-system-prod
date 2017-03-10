@@ -67,7 +67,7 @@ services:
       NODE_ENV: production
     volumes:
       - /opt/data:/opt/data
-      - /mnt/groups:/mnt/groups
+      - /mnt/groups:/groups/mousebrainmicro/mousebrainmicro
     ports:
       - 9661:9661
     networks:
