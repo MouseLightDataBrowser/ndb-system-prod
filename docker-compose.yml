@@ -59,6 +59,15 @@ services:
     networks:
       - back_tier
 
+  data:
+    image: mouselightdatabrowser/data
+    container_name: "ndb_data"
+    hostname: ndb-data
+    environment:
+      NODE_ENV: production
+    networks:
+      - back_tier
+
   transform-api:
     image: mouselightdatabrowser/transform-api
     container_name: "ndb_transform_api"
