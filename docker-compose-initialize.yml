@@ -68,20 +68,6 @@ services:
     networks:
       - back_tier
 
-  transform-api:
-    image: mouselightdatabrowser/transform-api
-    container_name: "ndb_transform_api"
-    hostname: transform-api
-    environment:
-      NODE_ENV: production
-    volumes:
-      - /opt/data:/opt/data
-#      - /mnt/groups:/groups/mousebrainmicro/mousebrainmicro
-    ports:
-      - 9661:9661
-    networks:
-      - back_tier
-
 volumes:
   mq_data: 
   sample_data:
