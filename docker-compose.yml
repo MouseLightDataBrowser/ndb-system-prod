@@ -82,6 +82,17 @@ services:
     networks:
       - back_tier
 
+  transform-client:
+    image: mouselightdatabrowser/transform-client
+    container_name: "ndb_transform_client"
+    hostname: transform-client
+    environment:
+      NODE_ENV: production
+    ports:
+      - 9663:9663
+    networks:
+      - back_tier
+
 volumes:
   mq_data: 
   sample_data:
