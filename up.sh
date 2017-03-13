@@ -1,3 +1,3 @@
 #!/usr/bin/env bash
 
-docker-compose -p ndb up
+docker-compose -p ndb up -d
