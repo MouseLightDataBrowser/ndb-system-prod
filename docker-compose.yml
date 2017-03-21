@@ -82,7 +82,7 @@ services:
       - back_tier
 
   sample-web:
-    image: mouselightdatabrowser/sample-web
+    image: mouselightdatabrowser/sample-client
     container_name: "ndb_sample_client"
     hostname: sample-client
     environment:
@@ -105,7 +105,7 @@ services:
       - back_tier
 
   swc-web:
-    image: mouselightdatabrowser/swc-web
+    image: mouselightdatabrowser/swc-client
     container_name: "ndb_swc_client"
     hostname: swc-client
     environment:
