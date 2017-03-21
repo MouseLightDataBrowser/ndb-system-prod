@@ -137,7 +137,6 @@ services:
     hostname: transform-client
     environment:
       NODE_ENV: production
-      VIRTUAL_HOST: transform-test.ml-ubuntu-test.hhmi.org
     ports:
       - 9663:9663
     networks:
