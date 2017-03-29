@@ -142,6 +142,26 @@ services:
     networks:
       - back_tier
 
+  transform-search:
+    image: mouselightdatabrowser/transform-search
+    hostname: transform-search
+    environment:
+      NODE_ENV: production
+    ports:
+      - 9664:9664
+    networks:
+      - back_tier
+
+  landing:
+    image: mouselightdatabrowser/landing
+    hostname: landing
+    environment:
+      NODE_ENV: production
+    ports:
+      - 80:9000
+    networks:
+      - back_tier
+
 volumes:
   mq_data: 
   sample_data:
