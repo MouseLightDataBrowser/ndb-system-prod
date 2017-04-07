@@ -1,5 +1,31 @@
 version: '3.1'
 services:
+  metrics-db:
+    image: influxdb
+    hostname: metrics-db
+    ports:
+      - 8086:8086
+    volumes:
+      - influx_data:/var/lib/influxdb
+      - influx_config:/etc/influxdb
+    networks:
+      - back_tier
+
+  grafana:
+    image: grafana/grafana
+    hostname: grafana-metrics
+    ports:
+      - 8087:3000
+    environment:
+      GF_AUTH_ANONYMOUS_ENABLED: 1
+      GF_AUTH_ANONYMOUS_ORG_NAME: "Janelia"
+    volumes:
+      - grafana_data:/var/lib/grafana
+      - grafana_config:/etc/grafana
+      - grafana_log:/var/log/grafana
+    networks:
+      - back_tier
+
   message-queue:
     image: rabbitmq:3-management
     container_name: "ndb_message_queue"
@@ -163,7 +189,12 @@ services:
       - back_tier
 
 volumes:
-  mq_data: 
+  influx_data:
+  influx_config:
+  grafana_config:
+  grafana_log:
+  grafana_data:
+  mq_data:
   sample_data:
   swc_data:
   transform_data:
