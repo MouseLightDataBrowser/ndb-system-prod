@@ -144,7 +144,7 @@ services:
       - back_tier
 
   transform-api:
-    image: mouselightdatabrowser/transform-api
+    image: mouselightdatabrowser/transform-api:1.0
     container_name: "ndb_transform_api"
     hostname: transform-api
     environment:
@@ -169,7 +169,7 @@ services:
       - back_tier
 
   transform-search:
-    image: mouselightdatabrowser/transform-search
+    image: mouselightdatabrowser/transform-search:1.0
     hostname: transform-search
     environment:
       NODE_ENV: production
