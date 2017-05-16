@@ -169,7 +169,7 @@ services:
       - back_tier
 
   transform-search:
-    image: mouselightdatabrowser/transform-search:1.0.1
+    image: mouselightdatabrowser/transform-search:1.0
     hostname: transform-search
     environment:
       NODE_ENV: production
