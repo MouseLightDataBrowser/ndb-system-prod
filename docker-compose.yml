@@ -191,7 +191,7 @@ services:
   sample-api-test:
     image: mouselightdatabrowser/sample-api-test
     container_name: "ndb_sample_api-test"
-    hostname: sample-api
+    hostname: sample-api-test
     environment:
       NODE_ENV: production
     ports:
