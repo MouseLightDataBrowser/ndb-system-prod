@@ -188,6 +188,29 @@ services:
     networks:
       - back_tier
 
+  sample-api-test:
+    image: mouselightdatabrowser/sample-api-test
+    container_name: "ndb_sample_api-test"
+    hostname: sample-api
+    environment:
+      NODE_ENV: production
+    ports:
+      - 9671:9671
+    networks:
+      - back_tier
+
+  sample-web-test:
+    image: mouselightdatabrowser/sample-client-test
+    container_name: "ndb_sample_client-test"
+    hostname: sample-client-test
+    environment:
+      NODE_ENV: production
+      SAMPLE_SERVICE_PORT: 9741
+    ports:
+      - 9743:9673
+    networks:
+      - back_tier
+
 volumes:
   influx_data:
   influx_config:
