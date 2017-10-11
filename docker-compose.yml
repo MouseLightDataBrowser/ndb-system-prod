@@ -97,25 +97,25 @@ services:
       - back_tier
 
   sample-api:
-    image: mouselightdatabrowser/sample-api
+    image: mouselightdatabrowser/sample-api-test
     container_name: "ndb_sample_api"
     hostname: sample-api
     environment:
       NODE_ENV: production
     ports:
-      - 9641:9641
+      - 9671:9671
     networks:
       - back_tier
 
   sample-web:
-    image: mouselightdatabrowser/sample-client
+    image: mouselightdatabrowser/sample-client-test
     container_name: "ndb_sample_client"
     hostname: sample-client
     environment:
       NODE_ENV: production
-      SAMPLE_SERVICE_PORT: 9641
+      SAMPLE_SERVICE_PORT: 9671
     ports:
-      - 9643:9643
+      - 9673:9673
     networks:
       - back_tier
 
@@ -185,29 +185,6 @@ services:
       NODE_ENV: production
     ports:
       - 80:9000
-    networks:
-      - back_tier
-
-  sample-api-test:
-    image: mouselightdatabrowser/sample-api-test
-    container_name: "ndb_sample_api-test"
-    hostname: sample-api-test
-    environment:
-      NODE_ENV: production
-    ports:
-      - 9671:9671
-    networks:
-      - back_tier
-
-  sample-web-test:
-    image: mouselightdatabrowser/sample-client-test
-    container_name: "ndb_sample_client-test"
-    hostname: sample-client-test
-    environment:
-      NODE_ENV: production
-      SAMPLE_SERVICE_PORT: 9671
-    ports:
-      - 9673:9673
     networks:
       - back_tier
 
