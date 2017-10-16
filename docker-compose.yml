@@ -97,7 +97,7 @@ services:
       - back_tier
 
   sample-api:
-    image: mouselightdatabrowser/sample-api-test
+    image: mouselightdatabrowser/sample-api
     container_name: "ndb_sample_api"
     hostname: sample-api
     environment:
@@ -108,7 +108,7 @@ services:
       - back_tier
 
   sample-web:
-    image: mouselightdatabrowser/sample-client-test
+    image: mouselightdatabrowser/sample-client
     container_name: "ndb_sample_client"
     hostname: sample-client
     environment:
