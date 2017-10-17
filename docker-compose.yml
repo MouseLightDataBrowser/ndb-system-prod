@@ -1,5 +1,14 @@
 version: '3.1'
 services:
+  proxy:
+    build:
+      context:  ./nginx
+      dockerfile: Dockerfile
+    ports:
+      - "9664:80"
+    networks:
+      - back_tier
+
   metrics-db:
     image: influxdb
     hostname: metrics-db
@@ -23,20 +32,6 @@ services:
       - grafana_data:/var/lib/grafana
       - grafana_config:/etc/grafana
       - grafana_log:/var/log/grafana
-    networks:
-      - back_tier
-
-  message-queue:
-    image: rabbitmq:3-management
-    container_name: "ndb_message_queue"
-    hostname: message-queue
-    ports:
-      - 5672:5672
-      - 15672:15672
-    environment:
-      RABBITMQ_ERLANG_COOKIE: "mqsecret"
-    volumes:
-      - mq_data:/var/lib/rabbitmq
     networks:
       - back_tier
 
@@ -92,7 +87,7 @@ services:
     environment:
       NODE_ENV: production
     volumes:
-      - /opt/data:/opt/data
+      - "${DATA_VOL}:/opt/data"
     networks:
       - back_tier
 
@@ -150,7 +145,7 @@ services:
     environment:
       NODE_ENV: production
     volumes:
-      - /opt/data:/opt/data
+      - "${DATA_VOL}:/opt/data"
       - "${TRANSFORM_VOL}:/groups/mousebrainmicro/mousebrainmicro"
     ports:
       - 9661:9661
@@ -168,15 +163,21 @@ services:
     networks:
       - back_tier
 
-  transform-search:
+  transform-search-1:
     image: mouselightdatabrowser/transform-search
-    hostname: transform-search
+    hostname: transform-search-1
     environment:
       NODE_ENV: production
-    ports:
-      - 9664:9664
     networks:
       - back_tier
+
+  transform-search-2:
+     image: mouselightdatabrowser/transform-search
+     hostname: transform-search-2
+     environment:
+       NODE_ENV: production
+     networks:
+       - back_tier
 
   landing:
     image: mouselightdatabrowser/landing
@@ -194,7 +195,6 @@ volumes:
   grafana_config:
   grafana_log:
   grafana_data:
-  mq_data:
   sample_data:
   swc_data:
   transform_data:
