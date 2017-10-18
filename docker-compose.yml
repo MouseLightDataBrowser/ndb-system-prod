@@ -144,6 +144,7 @@ services:
     hostname: transform-api
     environment:
       NODE_ENV: production
+      NEURON_EXPLORER_RELEASE: internal
     volumes:
       - "${DATA_VOL}:/opt/data"
       - "${TRANSFORM_VOL}:/groups/mousebrainmicro/mousebrainmicro"
@@ -158,6 +159,7 @@ services:
     hostname: transform-api-2
     environment:
       NODE_ENV: production
+      NEURON_EXPLORER_RELEASE: internal
     volumes:
       - "${DATA_VOL}:/opt/data"
       - "${TRANSFORM_VOL}:/groups/mousebrainmicro/mousebrainmicro"
