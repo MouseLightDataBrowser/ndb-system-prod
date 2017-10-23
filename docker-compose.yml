@@ -80,6 +80,21 @@ services:
     networks:
       - back_tier
 
+  search-db:
+    image: postgres:9
+    container_name: "ndb_search_db"
+    hostname: search-db
+    ports:
+      - 5435:5432
+    environment:
+      PGDATA: /var/lib/postgresql/data/pgdata
+      POSTGRES_PASSWORD: "pgsecret"
+    volumes:
+      - search_data:/var/lib/postgresql/data
+      - ./datastore/search:/docker-entrypoint-initdb.d
+    networks:
+      - back_tier
+
   data:
     image: mouselightdatabrowser/data
     container_name: "ndb_data"
@@ -153,19 +168,6 @@ services:
     networks:
       - back_tier
 
-  transform-api-2:
-    image: mouselightdatabrowser/transform-api
-    container_name: "ndb_transform_api-2"
-    hostname: transform-api-2
-    environment:
-      NODE_ENV: production
-      NEURON_EXPLORER_RELEASE: internal
-    volumes:
-      - "${DATA_VOL}:/opt/data"
-      - "${TRANSFORM_VOL}:/groups/mousebrainmicro/mousebrainmicro"
-    networks:
-      - back_tier
-
   transform-client:
     image: mouselightdatabrowser/transform-client
     container_name: "ndb_transform_client"
@@ -185,12 +187,22 @@ services:
     networks:
       - back_tier
 
-  transform-search-2:
-     image: mouselightdatabrowser/transform-search
-     hostname: transform-search-2
+  search-api:
+    image: mouselightdatabrowser/search-api
+    container_name: "ndb_transform_api-2"
+    hostname: search-api
+    environment:
+      NODE_ENV: production
+      NEURON_EXPLORER_RELEASE: internal
+    networks:
+      - back_tier
+
+  search-client:
+     image: mouselightdatabrowser/search-client
+     hostname: search-client
      environment:
        NODE_ENV: production
-       TRANSFORM_API_HOST: transform-api-2
+       TRANSFORM_API_HOST: search-client
      networks:
        - back_tier
 
@@ -213,6 +225,7 @@ volumes:
   sample_data:
   swc_data:
   transform_data:
+  search_data:
 
 networks:
   back_tier:
