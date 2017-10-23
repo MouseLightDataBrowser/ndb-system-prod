@@ -189,7 +189,7 @@ services:
 
   search-api:
     image: mouselightdatabrowser/search-api
-    container_name: "ndb_transform_api-2"
+    container_name: "search-api"
     hostname: search-api
     environment:
       NODE_ENV: production
