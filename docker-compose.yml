@@ -179,14 +179,6 @@ services:
     networks:
       - back_tier
 
-  transform-search-1:
-    image: mouselightdatabrowser/transform-search
-    hostname: transform-search-1
-    environment:
-      NODE_ENV: production
-    networks:
-      - back_tier
-
   search-api:
     image: mouselightdatabrowser/search-api
     container_name: "ndb_search-api"
@@ -206,7 +198,7 @@ services:
        NODE_ENV: production
        TRANSFORM_API_HOST: search-api
      ports:
-       - 9683:9683
+       - 9664:9683
      networks:
        - back_tier
 
