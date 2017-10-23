@@ -203,6 +203,8 @@ services:
      environment:
        NODE_ENV: production
        TRANSFORM_API_HOST: search-client
+    ports:
+      - 9683:9663
      networks:
        - back_tier
 
