@@ -209,7 +209,7 @@ services:
       context:  ./nginx
       dockerfile: Dockerfile
     ports:
-      - "9664:80"
+      - 9664:80
     networks:
       - back_tier
     links:
