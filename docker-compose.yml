@@ -1,14 +1,5 @@
 version: '3.1'
 services:
-  proxy:
-    build:
-      context:  ./nginx
-      dockerfile: Dockerfile
-    ports:
-      - "9664:80"
-    networks:
-      - back_tier
-
   metrics-db:
     image: influxdb
     hostname: metrics-db
@@ -102,7 +93,7 @@ services:
     environment:
       NODE_ENV: production
     volumes:
-      - "${DATA_VOL}:/opt/data"
+      - "${BACKUP_DATA_VOL}:/opt/data"
     networks:
       - back_tier
 
@@ -161,7 +152,6 @@ services:
       NODE_ENV: production
       NEURON_EXPLORER_RELEASE: internal
     volumes:
-      - "${DATA_VOL}:/opt/data"
       - "${TRANSFORM_VOL}:/groups/mousebrainmicro/mousebrainmicro"
     ports:
       - 9661:9661
@@ -178,6 +168,8 @@ services:
       - 9663:9663
     networks:
       - back_tier
+    links:
+      - transform-api
 
   search-api-1:
     image: mouselightdatabrowser/search-api
@@ -201,6 +193,21 @@ services:
        - 9683:9683
      networks:
        - back_tier
+     links:
+       - search-api-1
+
+  export-api-1:
+    image: mouselightdatabrowser/export-api
+    container_name: "ndb_export-api-1"
+    hostname: export-api-1
+    environment:
+      NODE_ENV: production
+    volumes:
+       - "${EXPORT_DATA_VOL}:/opt/data/export"
+    ports:
+      - 9691:9691
+    networks:
+      - back_tier
 
   landing:
     image: mouselightdatabrowser/landing
@@ -211,6 +218,19 @@ services:
       - 80:9000
     networks:
       - back_tier
+
+  proxy:
+    build:
+      context:  ./nginx
+      dockerfile: Dockerfile
+    ports:
+      - "9664:80"
+    networks:
+      - back_tier
+    links:
+      - export-api-1
+      - search-api-1
+      - search-client-1
 
 volumes:
   influx_data:
