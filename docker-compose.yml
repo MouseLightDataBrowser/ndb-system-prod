@@ -189,8 +189,6 @@ services:
      environment:
        NODE_ENV: production
        TRANSFORM_API_HOST: search-api-1
-     ports:
-       - 9683:9683
      networks:
        - back_tier
      links:
