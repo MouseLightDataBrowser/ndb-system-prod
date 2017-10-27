@@ -230,8 +230,6 @@ services:
     build:
       context:  ./nginx
       dockerfile: Dockerfile
-    volumes:
-      - nginx_log:/var/log/nginx/log
     ports:
       - 9664:80
     networks:
@@ -251,7 +249,6 @@ volumes:
   swc_data:
   transform_data:
   search_data:
-  nginx_log:
 
 networks:
   back_tier:
