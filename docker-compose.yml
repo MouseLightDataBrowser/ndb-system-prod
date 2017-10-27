@@ -231,7 +231,7 @@ services:
       context:  ./nginx
       dockerfile: Dockerfile
     volumes:
-      - nginx_log:/var/log/nginx
+      - nginx_log:/var/log/nginx/log
     ports:
       - 9664:80
     networks:
