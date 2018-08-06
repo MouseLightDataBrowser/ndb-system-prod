@@ -222,7 +222,7 @@ services:
     environment:
       NODE_ENV: production
     ports:
-      - 80:9000
+      - 8080:9000
     networks:
       - back_tier
 
