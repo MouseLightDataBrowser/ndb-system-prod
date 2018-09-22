@@ -198,6 +198,7 @@ services:
      environment:
        NODE_ENV: production
        TRANSFORM_API_HOST: search-api-1
+       NEURON_BROWSER_RELEASE: internal
      networks:
        - back_tier
      links:
