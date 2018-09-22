@@ -186,7 +186,7 @@ services:
     hostname: search-api-1
     environment:
       NODE_ENV: production
-      NEURON_EXPLORER_RELEASE: internal
+      NEURON_BROWSER_RELEASE: internal
     ports:
       - 9681:9681
     networks:
@@ -198,7 +198,6 @@ services:
      environment:
        NODE_ENV: production
        TRANSFORM_API_HOST: search-api-1
-       NEURON_BROWSER_RELEASE: internal
      networks:
        - back_tier
      links:
