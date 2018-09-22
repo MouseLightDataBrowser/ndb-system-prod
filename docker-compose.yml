@@ -1,7 +1,7 @@
 version: '3.1'
 services:
   metrics-db:
-    image: influxdb
+    image: influxdb:1.5
     hostname: metrics-db
     ports:
       - 8086:8086
@@ -12,7 +12,7 @@ services:
       - back_tier
 
   grafana:
-    image: grafana/grafana
+    image: grafana/grafana:5.1.4
     hostname: grafana-metrics
     ports:
       - 8087:3000
