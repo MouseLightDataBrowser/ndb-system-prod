@@ -216,8 +216,6 @@ services:
       TRANSFORM_API_HOST: search-api-1
     networks:
     - back_tier
-    ports:
-    - 9664:9664
     links:
     - search-api-1
 
@@ -229,8 +227,6 @@ services:
       NODE_ENV: production
       NEURON_BROWSER_RELEASE: internal
       SEARCH_DB_HOST: search-team-db
-    ports:
-    - 9682:9681
     networks:
     - back_tier
 
@@ -243,8 +239,6 @@ services:
       TRANSFORM_API_HOST: search-team-api-1
     networks:
     - back_tier
-    ports:
-    - 9666:9666
     links:
     - search-team-api-1
 
@@ -283,6 +277,19 @@ services:
     - export-api-1
     - search-api-1
     - search-client-1
+
+  team-proxy:
+    build:
+      context:  ./nginx-team
+      dockerfile: Dockerfile
+    ports:
+    - 9666:80
+    networks:
+    - back_tier
+    links:
+    - export-api-1
+    - search-team-api-1
+    - search-team-client-1
 
 volumes:
   influx_data:
