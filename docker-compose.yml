@@ -190,6 +190,7 @@ services:
     hostname: transform-search
     environment:
       NODE_ENV: production
+      TRANSFORM_AUTH_PASS:
     ports:
     - 9665:9665
     networks:
