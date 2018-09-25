@@ -4,87 +4,102 @@ services:
     image: influxdb:1.5
     hostname: metrics-db
     ports:
-      - 8086:8086
+    - 8086:8086
     volumes:
-      - influx_data:/var/lib/influxdb
-      - influx_config:/etc/influxdb
+    - influx_data:/var/lib/influxdb
+    - influx_config:/etc/influxdb
     networks:
-      - back_tier
+    - back_tier
 
   grafana:
     image: grafana/grafana:5.1.4
     hostname: grafana-metrics
     ports:
-      - 8087:3000
+    - 8087:3000
     environment:
       GF_AUTH_ANONYMOUS_ENABLED: 1
       GF_AUTH_ANONYMOUS_ORG_NAME: "Janelia"
     volumes:
-      - grafana_data:/var/lib/grafana
-      - grafana_config:/etc/grafana
-      - grafana_log:/var/log/grafana
+    - grafana_data:/var/lib/grafana
+    - grafana_config:/etc/grafana
+    - grafana_log:/var/log/grafana
     networks:
-      - back_tier
+    - back_tier
 
   sample-db:
     image: postgres:9
     container_name: "ndb_sample_db"
     hostname: sample-db
     ports:
-      - 5432:5432
+    - 5432:5432
     environment:
       PGDATA: /var/lib/postgresql/data/pgdata
       POSTGRES_PASSWORD: "pgsecret"
     volumes:
-      - sample_data:/var/lib/postgresql/data
-      - ./datastore/sample:/docker-entrypoint-initdb.d
+    - sample_data:/var/lib/postgresql/data
+    - ./datastore/sample:/docker-entrypoint-initdb.d
     networks:
-      - back_tier
+    - back_tier
 
   swc-db:
     image: postgres:9
     container_name: "ndb_swc_db"
     hostname: swc-db
     ports:
-      - 5433:5432
+    - 5433:5432
     environment:
       PGDATA: /var/lib/postgresql/data/pgdata
       POSTGRES_PASSWORD: "pgsecret"
     volumes:
-      - swc_data:/var/lib/postgresql/data
-      - ./datastore/swc:/docker-entrypoint-initdb.d
+    - swc_data:/var/lib/postgresql/data
+    - ./datastore/swc:/docker-entrypoint-initdb.d
     networks:
-      - back_tier
+    - back_tier
 
   transform-db:
     image: postgres:9
     container_name: "ndb_transform_db"
     hostname: transform-db
     ports:
-      - 5434:5432
+    - 5434:5432
     environment:
       PGDATA: /var/lib/postgresql/data/pgdata
       POSTGRES_PASSWORD: "pgsecret"
     volumes:
-      - transform_data:/var/lib/postgresql/data
-      - ./datastore/transform:/docker-entrypoint-initdb.d
+    - transform_data:/var/lib/postgresql/data
+    - ./datastore/transform:/docker-entrypoint-initdb.d
     networks:
-      - back_tier
+    - back_tier
 
   search-db:
     image: postgres:9
     container_name: "ndb_search_db"
     hostname: search-db
     ports:
-      - 5435:5432
+    - 5435:5432
     environment:
       PGDATA: /var/lib/postgresql/data/pgdata
       POSTGRES_PASSWORD: "pgsecret"
     volumes:
-      - search_data:/var/lib/postgresql/data
-      - ./datastore/search:/docker-entrypoint-initdb.d
+    - search_data:/var/lib/postgresql/data
+    - ./datastore/search:/docker-entrypoint-initdb.d
     networks:
-      - back_tier
+    - back_tier
+
+  search-team-db:
+    image: postgres:9
+    container_name: "ndb_search_team_db"
+    hostname: search-team-db
+    ports:
+    - 5436:5432
+    environment:
+      PGDATA: /var/lib/postgresql/data/pgdata
+      POSTGRES_PASSWORD: "pgsecret"
+    volumes:
+    - search_team_data:/var/lib/postgresql/data
+    - ./datastore/search:/docker-entrypoint-initdb.d
+    networks:
+    - back_tier
 
   data:
     image: mouselightdatabrowser/data
@@ -93,9 +108,9 @@ services:
     environment:
       NODE_ENV: production
     volumes:
-      - "${BACKUP_DATA_VOL}:/opt/data"
+    - "${BACKUP_DATA_VOL}:/opt/data"
     networks:
-      - back_tier
+    - back_tier
 
   sample-api:
     image: mouselightdatabrowser/sample-api
@@ -104,9 +119,9 @@ services:
     environment:
       NODE_ENV: production
     ports:
-      - 9671:9671
+    - 9671:9671
     networks:
-      - back_tier
+    - back_tier
 
   sample-web:
     image: mouselightdatabrowser/sample-client
@@ -116,9 +131,9 @@ services:
       NODE_ENV: production
       SAMPLE_SERVICE_PORT: 9671
     ports:
-      - 9673:9673
+    - 9673:9673
     networks:
-      - back_tier
+    - back_tier
 
   swc-api:
     image: mouselightdatabrowser/swc-api
@@ -127,9 +142,9 @@ services:
     environment:
       NODE_ENV: production
     ports:
-      - 9651:9651
+    - 9651:9651
     networks:
-      - back_tier
+    - back_tier
 
   swc-web:
     image: mouselightdatabrowser/swc-client
@@ -140,9 +155,9 @@ services:
       SWC_SERVICE_PORT: 9651
       SAMPLE_SERVICE_PORT: 9641
     ports:
-      - 9653:9653
+    - 9653:9653
     networks:
-      - back_tier
+    - back_tier
 
   transform-api:
     image: mouselightdatabrowser/transform-api
@@ -152,11 +167,11 @@ services:
       NODE_ENV: production
       NEURON_EXPLORER_RELEASE: internal
     volumes:
-      - "${TRANSFORM_VOL}:/groups/mousebrainmicro/mousebrainmicro"
+    - "${TRANSFORM_VOL}:/groups/mousebrainmicro/mousebrainmicro"
     ports:
-      - 9661:9661
+    - 9661:9661
     networks:
-      - back_tier
+    - back_tier
 
   transform-client:
     image: mouselightdatabrowser/transform-client
@@ -165,20 +180,20 @@ services:
     environment:
       NODE_ENV: production
     ports:
-      - 9663:9663
+    - 9663:9663
     networks:
-      - back_tier
+    - back_tier
 
   transform-search:
-     image: mouselightdatabrowser/transform-search
-     container_name: "ndb_transform_search"
-     hostname: transform-search
-     environment:
-       NODE_ENV: production
-     ports:
-       - 9665:9665
-     networks:
-       - back_tier
+    image: mouselightdatabrowser/transform-search
+    container_name: "ndb_transform_search"
+    hostname: transform-search
+    environment:
+      NODE_ENV: production
+    ports:
+    - 9665:9665
+    networks:
+    - back_tier
 
   search-api-1:
     image: mouselightdatabrowser/search-api
@@ -188,20 +203,50 @@ services:
       NODE_ENV: production
       NEURON_BROWSER_RELEASE: internal
     ports:
-      - 9681:9681
+    - 9681:9681
     networks:
-      - back_tier
+    - back_tier
 
   search-client-1:
-     image: mouselightdatabrowser/search-client
-     hostname: search-client-1
-     environment:
-       NODE_ENV: production
-       TRANSFORM_API_HOST: search-api-1
-     networks:
-       - back_tier
-     links:
-       - search-api-1
+    image: mouselightdatabrowser/search-client
+    container_name: "ndb_search-client-1"
+    hostname: search-client-1
+    environment:
+      NODE_ENV: production
+      TRANSFORM_API_HOST: search-api-1
+    networks:
+    - back_tier
+    ports:
+    - 9664:9664
+    links:
+    - search-api-1
+
+  search-team-api-1:
+    image: mouselightdatabrowser/search-api
+    container_name: "ndb_search-team-api-1"
+    hostname: search-team-api-1
+    environment:
+      NODE_ENV: production
+      NEURON_BROWSER_RELEASE: internal
+      SEARCH_DB_HOST: search-team-db
+    ports:
+    - 9682:9681
+    networks:
+    - back_tier
+
+  search-team-client-1:
+    image: mouselightdatabrowser/search-client
+    container_name: "ndb_search-team-client-1"
+    hostname: search-team-client-1
+    environment:
+      NODE_ENV: production
+      TRANSFORM_API_HOST: search-team-api-1
+    networks:
+    - back_tier
+    ports:
+    - 9666:9666
+    links:
+    - search-team-api-1
 
   export-api-1:
     image: mouselightdatabrowser/export-api
@@ -210,11 +255,11 @@ services:
     environment:
       NODE_ENV: production
     volumes:
-       - "${EXPORT_DATA_VOL}:/opt/data/export"
+    - "${EXPORT_DATA_VOL}:/opt/data/export"
     ports:
-      - 9691:9691
+    - 9691:9691
     networks:
-      - back_tier
+    - back_tier
 
   landing:
     image: mouselightdatabrowser/landing
@@ -222,22 +267,22 @@ services:
     environment:
       NODE_ENV: production
     ports:
-      - 8080:9000
+    - 8080:9000
     networks:
-      - back_tier
+    - back_tier
 
   proxy:
     build:
       context:  ./nginx
       dockerfile: Dockerfile
     ports:
-      - 9664:80
+    - 9664:80
     networks:
-      - back_tier
+    - back_tier
     links:
-      - export-api-1
-      - search-api-1
-      - search-client-1
+    - export-api-1
+    - search-api-1
+    - search-client-1
 
 volumes:
   influx_data:
@@ -249,6 +294,7 @@ volumes:
   swc_data:
   transform_data:
   search_data:
+  search_team_data:
 
 networks:
   back_tier:
