@@ -1,5 +1,9 @@
 #!/usr/bin/env bash
 
+if [ -a "options.sh" ]; then
+    source "options.sh"
+fi
+
 if [ -z ${BACKUP_VOL} ]; then
     export BACKUP_VOL="/opt/data/backups"
 fi
