@@ -229,7 +229,7 @@ services:
     hostname: search-team-api-1
     environment:
       NODE_ENV: production
-      NEURON_BROWSER_RELEASE: internal
+      NEURON_BROWSER_RELEASE: team
       SEARCH_DB_HOST: search-team-db
     ports:
     - 9685:9681
