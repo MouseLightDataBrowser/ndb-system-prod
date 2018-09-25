@@ -213,7 +213,8 @@ services:
     hostname: search-client-1
     environment:
       NODE_ENV: production
-      TRANSFORM_API_HOST: search-api-1
+      SEARCH_API_HOST: search-api-1
+      SEARCH_AUTH_PASS: "${SEARCH_AUTH_PASS_INTERNAL}"
     ports:
     - 9683:9683
     networks:
@@ -240,7 +241,8 @@ services:
     hostname: search-team-client-1
     environment:
       NODE_ENV: production
-      TRANSFORM_API_HOST: search-team-api-1
+      SEARCH_API_HOST: search-team-api-1
+      SEARCH_AUTH_PASS: "${SEARCH_AUTH_PASS_TEAM}"
     networks:
     - back_tier
     ports:

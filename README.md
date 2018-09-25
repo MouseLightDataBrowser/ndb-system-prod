@@ -1,4 +1,4 @@
-# Neuron Data Browser Container Deployment
+# Neuron Browser Internal Deployment
 NDB is a collection of services for managing annotated neuron data.
 
 ## Usage
