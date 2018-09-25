@@ -197,7 +197,7 @@ services:
 
   search-api-1:
     image: mouselightdatabrowser/search-api
-    container_name: "ndb_search-api-1"
+    container_name: "ndb_search_api_1"
     hostname: search-api-1
     environment:
       NODE_ENV: production
@@ -209,11 +209,13 @@ services:
 
   search-client-1:
     image: mouselightdatabrowser/search-client
-    container_name: "ndb_search-client-1"
+    container_name: "ndb_search_client_1"
     hostname: search-client-1
     environment:
       NODE_ENV: production
       TRANSFORM_API_HOST: search-api-1
+    ports:
+    - 9683:9683
     networks:
     - back_tier
     links:
@@ -221,30 +223,34 @@ services:
 
   search-team-api-1:
     image: mouselightdatabrowser/search-api
-    container_name: "ndb_search-team-api-1"
+    container_name: "ndb_search_team-api_1"
     hostname: search-team-api-1
     environment:
       NODE_ENV: production
       NEURON_BROWSER_RELEASE: internal
       SEARCH_DB_HOST: search-team-db
+    ports:
+    - 9685:9681
     networks:
     - back_tier
 
   search-team-client-1:
     image: mouselightdatabrowser/search-client
-    container_name: "ndb_search-team-client-1"
+    container_name: "ndb_search_team_client-1"
     hostname: search-team-client-1
     environment:
       NODE_ENV: production
       TRANSFORM_API_HOST: search-team-api-1
     networks:
     - back_tier
+    ports:
+    - 9687:9683
     links:
     - search-team-api-1
 
   export-api-1:
     image: mouselightdatabrowser/export-api
-    container_name: "ndb_export-api-1"
+    container_name: "ndb_export_api_1"
     hostname: export-api-1
     environment:
       NODE_ENV: production
@@ -265,7 +271,7 @@ services:
     networks:
     - back_tier
 
-  proxy:
+  internal-proxy:
     build:
       context:  ./nginx
       dockerfile: Dockerfile
