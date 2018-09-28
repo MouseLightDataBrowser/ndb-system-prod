@@ -4,8 +4,17 @@ if [ -a "options.sh" ]; then
     source "options.sh"
 fi
 
-if [ -z ${BACKUP_VOL} ]; then
-    export BACKUP_VOL="/opt/data/backups"
+if [ -z "MNB_COMPOSE_PROJECT" ]; then
+    export MNB_COMPOSE_PROJECT="mnb"
 fi
 
-docker run -it --rm --network ndb_back_tier -e BACKUP_VOL=${BACKUP_VOL} -e NODE_ENV=production -v /opt/data:/opt/data -v /mnt/groups:/mnt/groups mouselightdatabrowser/data
+if [ -z "${MNB_BACKUP_LOCATION}" ]; then
+    export MNB_BACKUP_LOCATION="/opt/data/backups"
+fi
+
+echo "${MNB_BACKUP_LOCATION}"
+
+test -d "${MNB_BACKUP_LOCATION}"  || echo "Backup location is not accessible - skipping"
+test -d "${MNB_BACKUP_LOCATION}"  || exit 0
+
+docker run -it --rm --network ${MNB_COMPOSE_PROJECT}_back_tier -e NODE_ENV=production -v "${MNB_BACKUP_LOCATION}":/opt/data/backups mouselightdatabrowser/data

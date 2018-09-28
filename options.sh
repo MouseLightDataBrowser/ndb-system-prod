@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 # Customize Compose project/container prefix.
-export MNB_COMPOSE_PROJECT=
+export MNB_COMPOSE_PROJECT=mnb
 
 # Environment variables that used both in the Docker Compose files and various scripts.  Env var that just used in the
 # Docker Compose files are in the Compose specific file env.
@@ -10,4 +10,4 @@ export MNB_COMPOSE_PROJECT=
 # transform, and search subdirectories within this location.  Note that this is _not_ mapped to the BACKUP_PATH env var
 # in the data services container.  It is used to map a local location to the default backup path in the container via a
 # volume mapping.
-export MNB_BACKUP_LOCATION=
+export MNB_BACKUP_LOCATION='/Volumes/Spare/Projects/Janelia/Neuron Data Browser/backups'

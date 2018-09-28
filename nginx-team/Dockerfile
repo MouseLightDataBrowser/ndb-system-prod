@@ -10,7 +10,7 @@ RUN apt-get update \
     && apt-get purge -qqy curl apt-transport-https apt-utils gnupg1 \
     && rm -rf /var/lib/apt/lists/*
 
-# Keep the nginx logs inside the container
+# Keep the nginx-internal logs inside the container
 RUN unlink /var/log/nginx/access.log \
     && unlink /var/log/nginx/error.log \
     && touch /var/log/nginx/access.log \
@@ -20,7 +20,7 @@ RUN unlink /var/log/nginx/access.log \
 
 COPY nginx.conf /etc/nginx/nginx.conf
 
-# Copy nginx stub_status config
+# Copy nginx-internal stub_status config
 COPY ./conf.d/stub_status.conf /etc/nginx/conf.d
 
 # API_KEY is required for configuring the NGINX Amplify Agent.
@@ -29,7 +29,7 @@ COPY ./conf.d/stub_status.conf /etc/nginx/conf.d
 # However, including private keys in the Dockerfile is not recommended.
 # Use the environment variables at runtime as described below.
 
-ENV API_KEY 14e0e4daf2a89c47da4c1c977fa268cb
+# ENV API_KEY 14e0e4daf2a89c47da4c1c977fa268cb
 
 # If AMPLIFY_IMAGENAME is set, the startup wrapper script will use it to
 # generate the 'imagename' to put in the /etc/amplify-agent/agent.conf
@@ -39,15 +39,15 @@ ENV API_KEY 14e0e4daf2a89c47da4c1c977fa268cb
 # AMPLIFY_IMAGENAME can also be passed to the instance at runtime as
 # described below.
 
-ENV AMPLIFY_IMAGENAME mnb-team
+# ENV AMPLIFY_IMAGENAME mnb-team
 
-# The /entrypoint.sh script will launch nginx and the Amplify Agent.
+# The /entrypoint.sh script will launch nginx-internal and the Amplify Agent.
 # The script honors API_KEY and AMPLIFY_IMAGENAME environment
 # variables, and updates /etc/amplify-agent/agent.conf accordingly.
 
 COPY ./entrypoint.sh /entrypoint.sh
 
 # TO set/override API_KEY and AMPLIFY_IMAGENAME when starting an instance:
-# docker run --name my-nginx1 -e API_KEY='..effc' -e AMPLIFY_IMAGENAME="service-name" -d nginx-amplify
+# docker run --name my-nginx1 -e API_KEY='..effc' -e AMPLIFY_IMAGENAME="service-name" -d nginx-internal-amplify
 
 ENTRYPOINT ["/entrypoint.sh"]

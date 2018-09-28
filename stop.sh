@@ -1,11 +1,11 @@
 #!/usr/bin/env bash
 
-if [ -z "${TRANSFORM_VOL}" ]; then
-    export TRANSFORM_VOL="/mnt/groups"
+if [ -a "options.sh" ]; then
+    source "options.sh"
 fi
 
-if [ -z "${DATA_VOL}" ]; then
-    export DATA_VOL="/opt/data"
+if [ -z "MNB_COMPOSE_PROJECT" ]; then
+    export MNB_COMPOSE_PROJECT="mnb"
 fi
 
-docker-compose -p ndb stop
+docker-compose -p ${MNB_COMPOSE_PROJECT} stop

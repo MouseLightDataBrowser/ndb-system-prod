@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# This script launches nginx and the NGINX Amplify Agent.
+# This script launches nginx-internal and the NGINX Amplify Agent.
 #
 # Unless already baked in the image, a real API_KEY is required for the
 # NGINX Amplify Agent to be able to connect to the backend.
@@ -16,12 +16,12 @@
 # Variables
 agent_conf_file="/etc/amplify-agent/agent.conf"
 agent_log_file="/var/log/amplify-agent/agent.log"
-nginx_status_conf="/etc/nginx/conf.d/stub_status.conf"
+nginx_status_conf="/etc/nginx-internal/conf.d/stub_status.conf"
 api_key=""
 amplify_imagename=""
 
-# Launch nginx
-echo "starting nginx ..."
+# Launch nginx-internal
+echo "starting nginx-internal ..."
 nginx -g "daemon off;" &
 
 nginx_pid=$!
@@ -74,4 +74,4 @@ fi
 
 wait ${nginx_pid}
 
-echo "nginx master process has stopped, exiting."
+echo "nginx-internal master process has stopped, exiting."

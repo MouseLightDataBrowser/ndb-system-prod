@@ -28,13 +28,12 @@ services:
 
   sample-db:
     image: postgres:9
-    container_name: "ndb_sample_db"
     hostname: sample-db
     ports:
     - 5432:5432
     environment:
       PGDATA: /var/lib/postgresql/data/pgdata
-      POSTGRES_PASSWORD: "pgsecret"
+      POSTGRES_PASSWORD: "${DATABASE_PW}"
     volumes:
     - sample_data:/var/lib/postgresql/data
     - ./datastore/sample:/docker-entrypoint-initdb.d
@@ -43,13 +42,12 @@ services:
 
   swc-db:
     image: postgres:9
-    container_name: "ndb_swc_db"
     hostname: swc-db
     ports:
     - 5433:5432
     environment:
       PGDATA: /var/lib/postgresql/data/pgdata
-      POSTGRES_PASSWORD: "pgsecret"
+      POSTGRES_PASSWORD: "${DATABASE_PW}"
     volumes:
     - swc_data:/var/lib/postgresql/data
     - ./datastore/swc:/docker-entrypoint-initdb.d
@@ -58,13 +56,12 @@ services:
 
   transform-db:
     image: postgres:9
-    container_name: "ndb_transform_db"
     hostname: transform-db
     ports:
     - 5434:5432
     environment:
       PGDATA: /var/lib/postgresql/data/pgdata
-      POSTGRES_PASSWORD: "pgsecret"
+      POSTGRES_PASSWORD: "${DATABASE_PW}"
     volumes:
     - transform_data:/var/lib/postgresql/data
     - ./datastore/transform:/docker-entrypoint-initdb.d
@@ -73,13 +70,12 @@ services:
 
   search-db:
     image: postgres:9
-    container_name: "ndb_search_db"
     hostname: search-db
     ports:
     - 5435:5432
     environment:
       PGDATA: /var/lib/postgresql/data/pgdata
-      POSTGRES_PASSWORD: "pgsecret"
+      POSTGRES_PASSWORD: "${DATABASE_PW}"
     volumes:
     - search_data:/var/lib/postgresql/data
     - ./datastore/search:/docker-entrypoint-initdb.d
@@ -88,217 +84,17 @@ services:
 
   search-team-db:
     image: postgres:9
-    container_name: "ndb_search_team_db"
     hostname: search-team-db
     ports:
     - 5436:5432
     environment:
       PGDATA: /var/lib/postgresql/data/pgdata
-      POSTGRES_PASSWORD: "pgsecret"
+      POSTGRES_PASSWORD: "${DATABASE_PW}"
     volumes:
     - search_team_data:/var/lib/postgresql/data
     - ./datastore/search:/docker-entrypoint-initdb.d
     networks:
     - back_tier
-
-  data:
-    image: mouselightdatabrowser/data
-    container_name: "ndb_data"
-    hostname: ndb-data
-    environment:
-      NODE_ENV: production
-    volumes:
-    - "${BACKUP_DATA_VOL}:/opt/data"
-    networks:
-    - back_tier
-
-  sample-api:
-    image: mouselightdatabrowser/sample-api
-    container_name: "ndb_sample_api"
-    hostname: sample-api
-    environment:
-      NODE_ENV: production
-    ports:
-    - 9671:9671
-    networks:
-    - back_tier
-
-  sample-web:
-    image: mouselightdatabrowser/sample-client
-    container_name: "ndb_sample_client"
-    hostname: sample-client
-    environment:
-      NODE_ENV: production
-      SAMPLE_SERVICE_PORT: 9671
-    ports:
-    - 9673:9673
-    networks:
-    - back_tier
-
-  swc-api:
-    image: mouselightdatabrowser/swc-api
-    container_name: "ndb_swc_api"
-    hostname: swc-api
-    environment:
-      NODE_ENV: production
-    ports:
-    - 9651:9651
-    networks:
-    - back_tier
-
-  swc-web:
-    image: mouselightdatabrowser/swc-client
-    container_name: "ndb_swc_client"
-    hostname: swc-client
-    environment:
-      NODE_ENV: production
-      SWC_SERVICE_PORT: 9651
-      SAMPLE_SERVICE_PORT: 9641
-    ports:
-    - 9653:9653
-    networks:
-    - back_tier
-
-  transform-api:
-    image: mouselightdatabrowser/transform-api
-    container_name: "ndb_transform_api"
-    hostname: transform-api
-    environment:
-      NODE_ENV: production
-      NEURON_EXPLORER_RELEASE: internal
-    volumes:
-    - "${TRANSFORM_VOL}:/groups/mousebrainmicro/mousebrainmicro"
-    ports:
-    - 9661:9661
-    networks:
-    - back_tier
-
-  transform-client:
-    image: mouselightdatabrowser/transform-client
-    container_name: "ndb_transform_client"
-    hostname: transform-client
-    environment:
-      NODE_ENV: production
-    ports:
-    - 9663:9663
-    networks:
-    - back_tier
-
-  transform-search:
-    image: mouselightdatabrowser/transform-search
-    container_name: "ndb_transform_search"
-    hostname: transform-search
-    environment:
-      NODE_ENV: production
-      TRANSFORM_AUTH_PASS:
-    ports:
-    - 9665:9665
-    networks:
-    - back_tier
-
-  search-api-1:
-    image: mouselightdatabrowser/search-api
-    container_name: "ndb_search_api_1"
-    hostname: search-api-1
-    environment:
-      NODE_ENV: production
-      NEURON_BROWSER_RELEASE: internal
-    ports:
-    - 9681:9681
-    networks:
-    - back_tier
-
-  search-client-1:
-    image: mouselightdatabrowser/search-client
-    container_name: "ndb_search_client_1"
-    hostname: search-client-1
-    environment:
-      NODE_ENV: production
-      SEARCH_API_HOST: search-api-1
-      SEARCH_AUTH_PASS: "${SEARCH_AUTH_PASS_INTERNAL}"
-    ports:
-    - 9683:9683
-    networks:
-    - back_tier
-    links:
-    - search-api-1
-
-  search-team-api-1:
-    image: mouselightdatabrowser/search-api
-    container_name: "ndb_search_team-api_1"
-    hostname: search-team-api-1
-    environment:
-      NODE_ENV: production
-      NEURON_BROWSER_RELEASE: team
-      SEARCH_DB_HOST: search-team-db
-    ports:
-    - 9685:9681
-    networks:
-    - back_tier
-
-  search-team-client-1:
-    image: mouselightdatabrowser/search-client
-    container_name: "ndb_search_team_client-1"
-    hostname: search-team-client-1
-    environment:
-      NODE_ENV: production
-      SEARCH_API_HOST: search-team-api-1
-      SEARCH_AUTH_PASS: "${SEARCH_AUTH_PASS_TEAM}"
-    networks:
-    - back_tier
-    ports:
-    - 9687:9683
-    links:
-    - search-team-api-1
-
-  export-api-1:
-    image: mouselightdatabrowser/export-api
-    container_name: "ndb_export_api_1"
-    hostname: export-api-1
-    environment:
-      NODE_ENV: production
-    volumes:
-    - "${EXPORT_DATA_VOL}:/opt/data/export"
-    ports:
-    - 9691:9691
-    networks:
-    - back_tier
-
-  landing:
-    image: mouselightdatabrowser/landing
-    hostname: landing
-    environment:
-      NODE_ENV: production
-    ports:
-    - 8080:9000
-    networks:
-    - back_tier
-
-  internal-proxy:
-    build:
-      context:  ./nginx
-      dockerfile: Dockerfile
-    ports:
-    - 9664:80
-    networks:
-    - back_tier
-    links:
-    - export-api-1
-    - search-api-1
-    - search-client-1
-
-  team-proxy:
-    build:
-      context:  ./nginx-team
-      dockerfile: Dockerfile
-    ports:
-    - 9666:80
-    networks:
-    - back_tier
-    links:
-    - export-api-1
-    - search-team-api-1
-    - search-team-client-1
 
 volumes:
   influx_data:

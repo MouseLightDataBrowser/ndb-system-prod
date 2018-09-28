@@ -1,3 +1,11 @@
 #!/usr/bin/env bash
 
-docker-compose -p ndb logs --follow
+if [ -a "options.sh" ]; then
+    source "options.sh"
+fi
+
+if [ -z "MNB_COMPOSE_PROJECT" ]; then
+    export MNB_COMPOSE_PROJECT="mnb"
+fi
+
+docker-compose -p {MNB_COMPOSE_PROJECT} logs --follow
