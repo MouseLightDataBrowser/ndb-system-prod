@@ -153,9 +153,9 @@ services:
     build:
       context:  nginx-internal
       dockerfile: Dockerfile
-  environment:
-    API_KEY: "${AMPLIFY_API_KEY}"
-    INTERNAL_AMPLIFY_IMAGENAME:
+    environment:
+      API_KEY: "${AMPLIFY_API_KEY}"
+      INTERNAL_AMPLIFY_IMAGENAME:
     ports:
     - 9664:80
     networks:
