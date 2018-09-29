@@ -1,8 +1,8 @@
 version: '3.1'
 services:
-  data:
-    image: mouselightdatabrowser/data
-    hostname: ndb-data
+  data-services:
+    image: mouselightdatabrowser/data-services:1.4
+    hostname: data-services
     environment:
       NODE_ENV: production
     volumes:
