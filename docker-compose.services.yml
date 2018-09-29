@@ -160,7 +160,7 @@ services:
       dockerfile: Dockerfile
     environment:
       API_KEY: "${AMPLIFY_API_KEY}"
-      INTERNAL_AMPLIFY_IMAGENAME:
+      AMPLIFY_IMAGENAME: "${INTERNAL_AMPLIFY_IMAGENAME}"
     ports:
     - 9664:80
     networks:
@@ -176,7 +176,7 @@ services:
       dockerfile: Dockerfile
     environment:
       API_KEY: "${AMPLIFY_API_KEY}"
-      TEAM_AMPLIFY_IMAGENAME:
+      AMPLIFY_IMAGENAME:  "${TEAM_AMPLIFY_IMAGENAME}"
     ports:
     - 9666:80
     networks:
