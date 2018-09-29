@@ -8,4 +8,4 @@ if [ -z "MNB_COMPOSE_PROJECT" ]; then
     export MNB_COMPOSE_PROJECT="mnb"
 fi
 
-docker-compose -p ${MNB_COMPOSE_PROJECT} stop
+docker-compose -f docker-compose.yml -f docker-compose.services.yml -p ${MNB_COMPOSE_PROJECT} stop
