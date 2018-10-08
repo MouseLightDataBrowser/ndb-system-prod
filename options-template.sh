@@ -1,5 +1,8 @@
 #!/usr/bin/env bash
 
+# Will override all database passwords (optional).
+export DATABASE_PW=
+
 # Customize Compose project/container prefix.
 export MNB_COMPOSE_PROJECT=
 

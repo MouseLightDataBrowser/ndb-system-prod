@@ -6,27 +6,26 @@ services:
     environment:
       NODE_ENV: production
     volumes:
-    - "${MNB_BACKUP_LOCATION}:/opt/data/backups"
+    - "${MNB_BACKUP_LOCATION}:/opt/data/backup"
     networks:
     - back_tier
 
   sample-api:
-    image: mouselightdatabrowser/sample-api
+    image: mouselightdatabrowser/sample-api:1.4
     hostname: sample-api
     environment:
       NODE_ENV: production
       DATABASE_PW:
     ports:
-    - 9671:9671
+    - 9610:5000
     networks:
     - back_tier
 
   sample-web:
-    image: mouselightdatabrowser/sample-client
+    image: mouselightdatabrowser/sample-client:1.4
     hostname: sample-client
     environment:
       NODE_ENV: production
-      SAMPLE_SERVICE_PORT: 9671
     ports:
     - 9673:9673
     networks:
