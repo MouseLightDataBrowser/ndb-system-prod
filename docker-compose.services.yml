@@ -27,7 +27,7 @@ services:
     environment:
       NODE_ENV: production
     ports:
-    - 9673:9673
+    - 9673:5000
     networks:
     - back_tier
 
