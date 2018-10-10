@@ -135,7 +135,7 @@ services:
     environment:
       NODE_ENV: production
       SEARCH_API_HOST: search-team-api
-      SEARCH_AUTH_PASS: "${SEARCH_AUTH_PASS_TEAM}"
+      SEARCH_AUTH_PASS: "${AUTH_PASS_TEAM}"
     networks:
     - back_tier
     ports:
