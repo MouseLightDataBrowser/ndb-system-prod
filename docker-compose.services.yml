@@ -21,7 +21,7 @@ services:
     networks:
     - back_tier
 
-  sample-web:
+  sample-client:
     image: mouselightdatabrowser/sample-client:1.4
     hostname: sample-client
     environment:
@@ -33,22 +33,22 @@ services:
     - back_tier
 
   swc-api:
-    image: mouselightdatabrowser/swc-api
+    image: mouselightdatabrowser/swc-api:1.4
     hostname: swc-api
     environment:
       NODE_ENV: production
       DATABASE_PW:
     ports:
-    - 9651:9651
+    - 9651:5000
     networks:
     - back_tier
 
-  swc-web:
+  swc-client:
     image: mouselightdatabrowser/swc-client
     hostname: swc-client
     environment:
       NODE_ENV: production
-      SWC_SERVICE_PORT: 9651
+      SWC_SERVICE_PORT: 5000
       SWC_AUTH_PASS: "${AUTH_PASS_TEAM}"
     ports:
     - 9653:9653
