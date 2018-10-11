@@ -16,6 +16,8 @@ services:
     environment:
       NODE_ENV: production
       DATABASE_PW:
+    volumes:
+    - log_output:/var/log/mnb
     ports:
     - 9671:5000
     networks:
@@ -38,6 +40,8 @@ services:
     environment:
       NODE_ENV: production
       DATABASE_PW:
+    volumes:
+    - log_output:/var/log/mnb
     ports:
     - 9651:5000
     networks:
