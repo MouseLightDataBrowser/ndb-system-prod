@@ -186,3 +186,9 @@ services:
     - export-api
     - search-team-api
     - search-team-client
+
+volumes:
+  log_output:
+
+networks:
+  back_tier:
