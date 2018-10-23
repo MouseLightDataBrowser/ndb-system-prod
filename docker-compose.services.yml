@@ -48,38 +48,38 @@ services:
     - back_tier
 
   swc-client:
-    image: mouselightdatabrowser/swc-client
+    image: mouselightdatabrowser/swc-client:1.4
     hostname: swc-client
     environment:
       NODE_ENV: production
-      SWC_SERVICE_PORT: 5000
       SWC_AUTH_PASS: "${AUTH_PASS_TEAM}"
     ports:
-    - 9653:9653
+    - 9653:5000
     networks:
     - back_tier
 
   transform-api:
-    image: mouselightdatabrowser/transform-api
+    image: mouselightdatabrowser/transform-api:1.4
     hostname: transform-api
     environment:
       NODE_ENV: production
       DATABASE_PW:
     volumes:
+    - log_output:/var/log/mnb
     - "${TRANSFORM_VOL_EXT}:${TRANSFORM_VOL_INT}"
     ports:
-    - 9661:9661
+    - 9661:5000
     networks:
     - back_tier
 
   transform-client:
-    image: mouselightdatabrowser/transform-client
+    image: mouselightdatabrowser/transform-client:1.4
     hostname: transform-client
     environment:
       NODE_ENV: production
       TRANSFORM_AUTH_PASS: "${AUTH_PASS_TEAM}"
     ports:
-    - 9663:9663
+    - 9663:5000
     networks:
     - back_tier
 
