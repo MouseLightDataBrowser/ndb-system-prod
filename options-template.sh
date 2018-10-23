@@ -14,3 +14,5 @@ export MNB_COMPOSE_PROJECT=
 # in the data services container.  It is used to map a local location to the default backup path in the container via a
 # volume mapping.
 export MNB_BACKUP_LOCATION=
+
+export MNB_RESTORE_LOCATION=
