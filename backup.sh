@@ -4,14 +4,6 @@ if [ -a "options.sh" ]; then
     source "options.sh"
 fi
 
-if [ -z "MNB_COMPOSE_PROJECT" ]; then
-    export MNB_COMPOSE_PROJECT="mnb"
-fi
-
-if [ -z "${MNB_BACKUP_LOCATION}" ]; then
-    export MNB_BACKUP_LOCATION="/opt/data/backup"
-fi
-
 echo "${MNB_BACKUP_LOCATION}"
 
 test -d "${MNB_BACKUP_LOCATION}"  || echo "Backup location is not accessible - skipping"
