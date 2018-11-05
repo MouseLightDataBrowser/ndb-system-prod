@@ -8,4 +8,4 @@ if [ -z "MNB_COMPOSE_PROJECT" ]; then
     export MNB_COMPOSE_PROJECT="mnb"
 fi
 
-docker-compose -p {MNB_COMPOSE_PROJECT} logs --follow
+docker-compose -p ${MNB_COMPOSE_PROJECT} logs --follow
