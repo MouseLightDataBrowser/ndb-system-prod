@@ -82,20 +82,6 @@ services:
     networks:
     - back_tier
 
-  search-team-db:
-    image: postgres:9
-    hostname: search-team-db
-    ports:
-    - 5436:5432
-    environment:
-      PGDATA: /var/lib/postgresql/data/pgdata
-      POSTGRES_PASSWORD: "${DATABASE_PW}"
-    volumes:
-    - search_team_data:/var/lib/postgresql/data
-    - ./datastore/search:/docker-entrypoint-initdb.d
-    networks:
-    - back_tier
-
 volumes:
   influx_data:
   influx_config:
@@ -106,7 +92,6 @@ volumes:
   swc_data:
   transform_data:
   search_data:
-  search_team_data:
 
 networks:
   back_tier:
