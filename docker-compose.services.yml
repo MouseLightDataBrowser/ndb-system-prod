@@ -90,7 +90,7 @@ services:
       NODE_ENV: production
       TRANSFORM_AUTH_PASS: "${AUTH_PASS_TEAM}"
     ports:
-    - 9665:9665
+    - 9665:5000
     networks:
     - back_tier
 
@@ -102,50 +102,47 @@ services:
       NEURON_BROWSER_RELEASE: internal
       DATABASE_PW:
     ports:
-    - 9681:9681
+    - 9681:5000
     networks:
     - back_tier
 
-  search-client:
+  search-internal-client:
     image: mouselightdatabrowser/search-client:1.4
-    hostname: search-client
+    hostname: search-internal-client
     environment:
       NODE_ENV: production
       SEARCH_API_HOST: search-api
       SEARCH_AUTH_PASS: "${AUTH_PASS_INTERNAL}"
     ports:
-    - 9683:9683
+    - 9683:5000
     networks:
     - back_tier
     links:
     - search-api
-
-  search-team-api:
-    image: mouselightdatabrowser/search-api:1.4
-    hostname: search-team-api
-    environment:
-      NODE_ENV: production
-      NEURON_BROWSER_RELEASE: team
-      SEARCH_DB_HOST: search-team-db
-      DATABASE_PW:
-    ports:
-    - 9685:9681
-    networks:
-    - back_tier
 
   search-team-client:
     image: mouselightdatabrowser/search-client:1.4
     hostname: search-team-client
     environment:
       NODE_ENV: production
-      SEARCH_API_HOST: search-team-api
+      SEARCH_API_HOST: search-api
       SEARCH_AUTH_PASS: "${AUTH_PASS_TEAM}"
+    ports:
+    - 9683:5000
     networks:
     - back_tier
-    ports:
-    - 9687:9683
     links:
-    - search-team-api
+    - search-api
+
+  static-api:
+    image: mouselightdatabrowser/static-api:1.4
+    hostname: static-api
+    environment:
+      NODE_ENV: production
+    ports:
+    - 9691:5000
+    networks:
+    - back_tier
 
   export-api:
     image: mouselightdatabrowser/export-api:1.4
@@ -155,7 +152,7 @@ services:
     volumes:
     - "${EXPORT_DATA_LOCATION}:/opt/data/export"
     ports:
-    - 9691:9691
+    - 9691:5000
     networks:
     - back_tier
 
@@ -165,31 +162,16 @@ services:
       dockerfile: Dockerfile
     environment:
       API_KEY: "${AMPLIFY_API_KEY}"
-      AMPLIFY_IMAGENAME: "${INTERNAL_AMPLIFY_IMAGENAME}"
+      AMPLIFY_IMAGENAME: "${AMPLIFY_IMAGENAME}"
     ports:
     - 9664:80
     networks:
     - back_tier
     links:
+    - static-api
     - export-api
     - search-api
     - search-client
-
-  team-proxy:
-    build:
-      context:  ./nginx-team
-      dockerfile: Dockerfile
-    environment:
-      API_KEY: "${AMPLIFY_API_KEY}"
-      AMPLIFY_IMAGENAME:  "${TEAM_AMPLIFY_IMAGENAME}"
-    ports:
-    - 9666:80
-    networks:
-    - back_tier
-    links:
-    - export-api
-    - search-team-api
-    - search-team-client
 
 volumes:
   log_output:

@@ -1,4 +1,4 @@
-FROM nginx:1.13
+FROM nginx:1.15
 
 # Install the NGINX Amplify Agent
 RUN apt-get update \

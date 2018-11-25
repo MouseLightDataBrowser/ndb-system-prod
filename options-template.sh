@@ -13,6 +13,6 @@ export MNB_COMPOSE_PROJECT=
 # transform, and search subdirectories within this location.  Note that this is _not_ mapped to the BACKUP_PATH env var
 # in the data services container.  It is used to map a local location to the default backup path in the container via a
 # volume mapping.
-export MNB_BACKUP_LOCATION=
+export MNB_BACKUP_LOCATION=/opt/ndb/backup
 
-export MNB_RESTORE_LOCATION=
+export MNB_RESTORE_LOCATION=/opt/ndb/restore
