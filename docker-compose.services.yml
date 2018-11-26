@@ -6,9 +6,9 @@ services:
     environment:
       NODE_ENV: production
     volumes:
-    - "${MNB_BACKUP_LOCATION}:/opt/data/backup"
+      - "${MNB_BACKUP_LOCATION}:/opt/data/backup"
     networks:
-    - back_tier
+      - back_tier
 
   sample-api:
     image: mouselightdatabrowser/sample-api:1.4
@@ -17,11 +17,11 @@ services:
       NODE_ENV: production
       DATABASE_PW:
     volumes:
-    - log_output:/var/log/mnb
+      - log_output:/var/log/mnb
     ports:
-    - 9671:5000
+      - 9671:5000
     networks:
-    - back_tier
+      - back_tier
 
   sample-client:
     image: mouselightdatabrowser/sample-client:1.4
@@ -30,9 +30,9 @@ services:
       NODE_ENV: production
       SAMPLE_AUTH_PASS: "${AUTH_PASS_TEAM}"
     ports:
-    - 9673:5000
+      - 9673:5000
     networks:
-    - back_tier
+      - back_tier
 
   swc-api:
     image: mouselightdatabrowser/swc-api:1.4
@@ -41,11 +41,11 @@ services:
       NODE_ENV: production
       DATABASE_PW:
     volumes:
-    - log_output:/var/log/mnb
+      - log_output:/var/log/mnb
     ports:
-    - 9651:5000
+      - 9651:5000
     networks:
-    - back_tier
+      - back_tier
 
   swc-client:
     image: mouselightdatabrowser/swc-client:1.4
@@ -54,9 +54,9 @@ services:
       NODE_ENV: production
       SWC_AUTH_PASS: "${AUTH_PASS_TEAM}"
     ports:
-    - 9653:5000
+      - 9653:5000
     networks:
-    - back_tier
+      - back_tier
 
   transform-api:
     image: mouselightdatabrowser/transform-api:1.4
@@ -65,12 +65,12 @@ services:
       NODE_ENV: production
       DATABASE_PW:
     volumes:
-    - log_output:/var/log/mnb
-    - "${TRANSFORM_VOL_EXT}:${TRANSFORM_VOL_INT}"
+      - log_output:/var/log/mnb
+      - "${TRANSFORM_VOL_EXT}:${TRANSFORM_VOL_INT}"
     ports:
-    - 9661:5000
+      - 9661:5000
     networks:
-    - back_tier
+      - back_tier
 
   transform-client:
     image: mouselightdatabrowser/transform-client:1.4
@@ -79,9 +79,9 @@ services:
       NODE_ENV: production
       TRANSFORM_AUTH_PASS: "${AUTH_PASS_TEAM}"
     ports:
-    - 9663:5000
+      - 9663:5000
     networks:
-    - back_tier
+      - back_tier
 
   transform-search:
     image: mouselightdatabrowser/transform-search
@@ -90,21 +90,23 @@ services:
       NODE_ENV: production
       TRANSFORM_AUTH_PASS: "${AUTH_PASS_TEAM}"
     ports:
-    - 9665:5000
+      - 9665:5000
     networks:
-    - back_tier
+      - back_tier
 
   search-api:
     image: mouselightdatabrowser/search-api:1.4
     hostname: search-api
     environment:
       NODE_ENV: production
-      NEURON_BROWSER_RELEASE: internal
+      SEARCH_API_RELEASE_LEVEL: "Internal"
       DATABASE_PW:
+    volumes:
+      - log_output:/var/log/mnb
     ports:
-    - 9681:5000
+      - 9681:5000
     networks:
-    - back_tier
+      - back_tier
 
   search-internal-client:
     image: mouselightdatabrowser/search-client:1.4
@@ -114,12 +116,14 @@ services:
       SEARCH_API_HOST: search-api
       SEARCH_AUTH_PASS: "${AUTH_PASS_INTERNAL}"
       SEARCH_CLIENT_SCOPE: "Internal"
+    volumes:
+      - log_output:/var/log/mnb
     ports:
-    - 9683:5000
+      - 9683:5000
     networks:
-    - back_tier
+      - back_tier
     links:
-    - search-api
+      - search-api
 
   search-team-client:
     image: mouselightdatabrowser/search-client:1.4
@@ -128,23 +132,25 @@ services:
       NODE_ENV: production
       SEARCH_API_HOST: search-api
       SEARCH_AUTH_PASS: "${AUTH_PASS_TEAM}"
-        SEARCH_CLIENT_SCOPE: "Team"
+      SEARCH_CLIENT_SCOPE: "Team"
+    volumes:
+      - log_output:/var/log/mnb
     ports:
-    - 9683:5000
+      - 9685:5000
     networks:
-    - back_tier
+      - back_tier
     links:
-    - search-api
+      - search-api
 
   static-api:
-    image: mouselightdatabrowser/static-api:1.4
+    image: mouselightdatabrowser/static-resources:1.4
     hostname: static-api
     environment:
       NODE_ENV: production
     ports:
-    - 9691:5000
+      - 9691:5000
     networks:
-    - back_tier
+      - back_tier
 
   export-api:
     image: mouselightdatabrowser/export-api:1.4
@@ -152,11 +158,11 @@ services:
     environment:
       NODE_ENV: production
     volumes:
-    - "${EXPORT_DATA_LOCATION}:/opt/data/export"
+      - "${EXPORT_DATA_LOCATION}:/opt/data/export"
     ports:
-    - 9691:5000
+      - 9693:5000
     networks:
-    - back_tier
+      - back_tier
 
   internal-proxy:
     build:
@@ -166,14 +172,15 @@ services:
       API_KEY: "${AMPLIFY_API_KEY}"
       AMPLIFY_IMAGENAME: "${AMPLIFY_IMAGENAME}"
     ports:
-    - 9664:80
+      - 9664:80
     networks:
-    - back_tier
+      - back_tier
     links:
-    - static-api
-    - export-api
-    - search-api
-    - search-client
+      - static-api
+      - export-api
+      - search-api
+      - search-internal-client
+      - search-team-client
 
 volumes:
   log_output:
