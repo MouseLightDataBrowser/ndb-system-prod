@@ -183,6 +183,19 @@ services:
       - export-api
       - search-api
       - search-internal-client
+
+  team-proxy:
+    build:
+      context:  nginx-team
+      dockerfile: Dockerfile
+    ports:
+      - 9666:80
+    networks:
+      - back_tier
+    links:
+      - static-api
+      - export-api
+      - search-api
       - search-team-client
 
 volumes:
