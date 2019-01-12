@@ -162,6 +162,7 @@ services:
       NODE_ENV: production
     volumes:
       - "${EXPORT_DATA_LOCATION}:/opt/data/export"
+      - log_output:/var/log/mnb
     ports:
       - 9693:5000
     networks:
