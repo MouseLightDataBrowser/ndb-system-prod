@@ -8,7 +8,7 @@ services:
       BACKUP_PATH: /groups/mousebrainmicro/mousebrainmicro/neuron-database/backup
       RESTORE_PATH: /groups/mousebrainmicro/mousebrainmicro/neuron-database/restore
     volumes:
-      - "${MNB_BACKUP_LOCATION}:/groups/mousebrainmicro/mousebrainmicro"
+      - "${MNB_LOCAL_BACKUP_LOCATION}:/opt/data/"
     networks:
       - back_tier
 
