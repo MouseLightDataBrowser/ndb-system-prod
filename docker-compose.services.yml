@@ -5,8 +5,6 @@ services:
     hostname: data-services
     environment:
       NODE_ENV: production
-      BACKUP_PATH: /groups/mousebrainmicro/mousebrainmicro/neuron-database/backup
-      RESTORE_PATH: /groups/mousebrainmicro/mousebrainmicro/neuron-database/restore
     volumes:
       - "${MNB_LOCAL_BACKUP_LOCATION}:/opt/data/"
     networks:
