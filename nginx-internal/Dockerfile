@@ -29,7 +29,7 @@ COPY ./conf.d/stub_status.conf /etc/nginx/conf.d
 # However, including private keys in the Dockerfile is not recommended.
 # Use the environment variables at runtime as described below.
 
-# ENV API_KEY 14e0e4daf2a89c47da4c1c977fa268cb
+# ENV API_KEY
 
 # If AMPLIFY_IMAGENAME is set, the startup wrapper script will use it to
 # generate the 'imagename' to put in the /etc/amplify-agent/agent.conf
@@ -39,7 +39,7 @@ COPY ./conf.d/stub_status.conf /etc/nginx/conf.d
 # AMPLIFY_IMAGENAME can also be passed to the instance at runtime as
 # described below.
 
-# ENV AMPLIFY_IMAGENAME nb-internal
+# ENV AMPLIFY_IMAGENAME
 
 # The /entrypoint.sh script will launch nginx-internal and the Amplify Agent.
 # The script honors API_KEY and AMPLIFY_IMAGENAME environment
