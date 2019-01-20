@@ -17,7 +17,7 @@ services:
       NODE_ENV: production
       DATABASE_PW:
     volumes:
-      - log_output:/var/log/mnb
+      - "${MNB_LOG_VOLUME}:/var/log/mnb"
     ports:
       - 9671:5000
     networks:
@@ -29,6 +29,8 @@ services:
     environment:
       NODE_ENV: production
       SAMPLE_AUTH_PASS: "${AUTH_PASS_TEAM}"
+    volumes:
+      - "${MNB_LOG_VOLUME}:/var/log/mnb"
     ports:
       - 9673:5000
     networks:
@@ -41,7 +43,7 @@ services:
       NODE_ENV: production
       DATABASE_PW:
     volumes:
-      - log_output:/var/log/mnb
+      - "${MNB_LOG_VOLUME}:/var/log/mnb"
     ports:
       - 9651:5000
     networks:
@@ -53,6 +55,8 @@ services:
     environment:
       NODE_ENV: production
       SWC_AUTH_PASS: "${AUTH_PASS_TEAM}"
+    volumes:
+      - "${MNB_LOG_VOLUME}:/var/log/mnb"
     ports:
       - 9653:5000
     networks:
@@ -65,7 +69,7 @@ services:
       NODE_ENV: production
       DATABASE_PW:
     volumes:
-      - log_output:/var/log/mnb
+      - "${MNB_LOG_VOLUME}:/var/log/mnb"
       - "${TRANSFORM_VOL_EXT}:${TRANSFORM_VOL_INT}"
     ports:
       - 9661:5000
@@ -78,6 +82,8 @@ services:
     environment:
       NODE_ENV: production
       TRANSFORM_AUTH_PASS: "${AUTH_PASS_TEAM}"
+    volumes:
+      - "${MNB_LOG_VOLUME}:/var/log/mnb"
     ports:
       - 9663:5000
     networks:
@@ -103,7 +109,7 @@ services:
       SEARCH_API_RELEASE_LEVEL: "Internal"
       DATABASE_PW:
     volumes:
-      - log_output:/var/log/mnb
+      - "${MNB_LOG_VOLUME}:/var/log/mnb"
     ports:
       - 9681:5000
     networks:
@@ -118,7 +124,7 @@ services:
       SEARCH_AUTH_PASS: "${AUTH_PASS_INTERNAL}"
       SEARCH_CLIENT_SCOPE: "Internal"
     volumes:
-      - log_output:/var/log/mnb
+      - "${MNB_LOG_VOLUME}:/var/log/mnb"
     ports:
       - 9683:5000
     networks:
@@ -135,7 +141,7 @@ services:
       SEARCH_AUTH_PASS: "${AUTH_PASS_TEAM}"
       SEARCH_CLIENT_SCOPE: "Team"
     volumes:
-      - log_output:/var/log/mnb
+      - "${MNB_LOG_VOLUME}:/var/log/mnb"
     ports:
       - 9685:5000
     networks:
@@ -148,6 +154,8 @@ services:
     hostname: static-api
     environment:
       NODE_ENV: production
+    volumes:
+      - "${MNB_LOG_VOLUME}:/var/log/mnb"
     ports:
       - 9691:5000
     networks:
@@ -159,8 +167,8 @@ services:
     environment:
       NODE_ENV: production
     volumes:
+      - "${MNB_LOG_VOLUME}:/var/log/mnb"
       - "${EXPORT_DATA_LOCATION}:/opt/data/export"
-      - log_output:/var/log/mnb
     ports:
       - 9693:5000
     networks:
@@ -168,11 +176,13 @@ services:
 
   internal-proxy:
     build:
-      context:  nginx-internal
+      context: nginx-internal
       dockerfile: Dockerfile
     environment:
       API_KEY: "${AMPLIFY_API_KEY}"
-      AMPLIFY_IMAGENAME: "${AMPLIFY_IMAGENAME}"
+      AMPLIFY_IMAGENAME:
+    volumes:
+      - "${MNB_LOG_VOLUME}:/var/log/mnb"
     ports:
       - 9664:80
     networks:
@@ -185,8 +195,10 @@ services:
 
   team-proxy:
     build:
-      context:  nginx-team
+      context: nginx-team
       dockerfile: Dockerfile
+    volumes:
+      - "${MNB_LOG_VOLUME}:/var/log/mnb"
     ports:
       - 9666:80
     networks:
