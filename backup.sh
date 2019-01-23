@@ -4,7 +4,7 @@ if [[ -a "options.sh" ]]; then
     source "options.sh"
 fi
 
-haveLocal=test -d "${MNB_LOCAL_BACKUP_LOCATION}"
+haveLocal=(test -d "${MNB_LOCAL_BACKUP_LOCATION}")
 
 if [[ haveLocal ]]; then
     echo "attempting backup to ${MNB_LOCAL_BACKUP_LOCATION}"
@@ -13,7 +13,7 @@ else
     echo "local backup location ${MNB_LOCAL_BACKUP_LOCATION} is not accessible - skipping"
 fi
 
-haveRemote=test -d "${MNB_LOCAL_BACKUP_LOCATION}"
+haveRemote=(test -d "${MNB_LOCAL_BACKUP_LOCATION}")
 
 if [[ haveRemote ]]; then
     echo "attempting backup to ${MNB_REMOTE_BACKUP_LOCATION}"

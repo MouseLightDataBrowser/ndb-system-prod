@@ -4,7 +4,7 @@ if [[ -a "options.sh" ]]; then
     source "options.sh"
 fi
 
-haveRemote=test -d "${MNB_RESTORE_LOCATION}"
+haveRemote=(test -d "${MNB_RESTORE_LOCATION}")
 
 if [[ haveRemote ]]; then
     echo "attempting restore from ${MNB_RESTORE_LOCATION}"
