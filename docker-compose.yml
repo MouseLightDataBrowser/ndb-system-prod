@@ -92,7 +92,7 @@ services:
       POSTGRES_PASSWORD: "${DATABASE_PW}"
     volumes:
       - search_public_data:/var/lib/postgresql/data
-      - ./datastore/search:/docker-entrypoint-initdb.d
+      - ./datastore/search-public:/docker-entrypoint-initdb.d
     networks:
       - back_tier
 
