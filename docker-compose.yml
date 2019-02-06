@@ -82,6 +82,20 @@ services:
     networks:
     - back_tier
 
+  search-public-db:
+    image: postgres:9
+    hostname: search-db
+    ports:
+      - 5436:5432
+    environment:
+      PGDATA: /var/lib/postgresql/data/pgdata
+      POSTGRES_PASSWORD: "${DATABASE_PW}"
+    volumes:
+      - search_public_data:/var/lib/postgresql/data
+      - ./datastore/search:/docker-entrypoint-initdb.d
+    networks:
+      - back_tier
+
 volumes:
   influx_data:
   influx_config:
@@ -92,6 +106,7 @@ volumes:
   swc_data:
   transform_data:
   search_data:
+  search_public_data:
 
 networks:
   back_tier:
