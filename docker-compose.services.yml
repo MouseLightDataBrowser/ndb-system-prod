@@ -106,7 +106,7 @@ services:
       - back_tier
 
   search-internal-client:
-    image: mouselightdatabrowser/search-client:1.4.1
+    image: mouselightdatabrowser/search-client:1.4.2
     hostname: search-internal-client
     environment:
       NODE_ENV: production
@@ -123,7 +123,7 @@ services:
       - search-api
 
   search-team-client:
-    image: mouselightdatabrowser/search-client:1.4.2
+    image: mouselightdatabrowser/search-client:1.4.3
     hostname: search-team-client
     environment:
       NODE_ENV: production
