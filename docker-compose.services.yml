@@ -144,6 +144,7 @@ services:
     hostname: static-api
     environment:
       NODE_ENV: production
+      STATIC_API_IS_INTERNAL: 1
     volumes:
       - "${MNB_LOG_VOLUME}:/var/log/mnb"
     ports:
