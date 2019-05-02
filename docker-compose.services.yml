@@ -147,7 +147,7 @@ services:
       STATIC_API_IS_INTERNAL: 1
     volumes:
       - "${MNB_LOG_VOLUME}:/var/log/mnb"
-      - "${MNB_SLICE_LOCATION}:/app/static/slice/"
+      - "${MNB_SLICE_LOCATION}:/data/slice/"
     ports:
       - 9691:5000
     networks:
