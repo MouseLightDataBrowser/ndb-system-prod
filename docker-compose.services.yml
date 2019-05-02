@@ -145,9 +145,10 @@ services:
     environment:
       NODE_ENV: production
       STATIC_API_IS_INTERNAL: 1
+      STATIC_SLICE_MOUNT_POINT: "/data/slice/"
     volumes:
       - "${MNB_LOG_VOLUME}:/var/log/mnb"
-      - "${MNB_SLICE_LOCATION}:/data/slice/"
+      - "${MNB_SLICE_LOCATION}:/data/slice"
     ports:
       - 9691:5000
     networks:
