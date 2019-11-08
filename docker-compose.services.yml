@@ -1,7 +1,7 @@
 version: '3.1'
 services:
   sample-api:
-    image: mouselightdatabrowser/sample-api:1.4
+    image: mouselightdatabrowser/sample-api:1.5
     hostname: sample-api
     environment:
       NODE_ENV: production
@@ -14,7 +14,7 @@ services:
       - back_tier
 
   sample-client:
-    image: mouselightdatabrowser/sample-client:1.4
+    image: mouselightdatabrowser/sample-client:1.5
     hostname: sample-client
     environment:
       NODE_ENV: production
@@ -27,7 +27,7 @@ services:
       - back_tier
 
   swc-api:
-    image: mouselightdatabrowser/swc-api:1.4
+    image: mouselightdatabrowser/swc-api:1.5
     hostname: swc-api
     environment:
       NODE_ENV: production
@@ -40,7 +40,7 @@ services:
       - back_tier
 
   swc-client:
-    image: mouselightdatabrowser/swc-client:1.4
+    image: mouselightdatabrowser/swc-client:1.5
     hostname: swc-client
     environment:
       NODE_ENV: production
@@ -53,7 +53,7 @@ services:
       - back_tier
 
   transform-api:
-    image: mouselightdatabrowser/transform-api:1.4
+    image: mouselightdatabrowser/transform-api:1.5
     hostname: transform-api
     environment:
       NODE_ENV: production
@@ -67,7 +67,7 @@ services:
       - back_tier
 
   transform-client:
-    image: mouselightdatabrowser/transform-client:1.4
+    image: mouselightdatabrowser/transform-client:1.5
     hostname: transform-client
     environment:
       NODE_ENV: production
@@ -80,7 +80,7 @@ services:
       - back_tier
 
   transform-search:
-    image: mouselightdatabrowser/transform-search:1.4
+    image: mouselightdatabrowser/transform-search:1.5
     hostname: transform-search
     environment:
       NODE_ENV: production
@@ -92,7 +92,7 @@ services:
       - back_tier
 
   search-api:
-    image: mouselightdatabrowser/search-api:1.4
+    image: mouselightdatabrowser/search-api:1.5
     hostname: search-api
     environment:
       NODE_ENV: production
@@ -106,7 +106,7 @@ services:
       - back_tier
 
   search-internal-client:
-    image: mouselightdatabrowser/search-client:1.4
+    image: mouselightdatabrowser/search-client:1.5
     hostname: search-internal-client
     environment:
       NODE_ENV: production
@@ -123,7 +123,7 @@ services:
       - search-api
 
   search-team-client:
-    image: mouselightdatabrowser/search-client:1.4
+    image: mouselightdatabrowser/search-client:1.5
     hostname: search-team-client
     environment:
       NODE_ENV: production
