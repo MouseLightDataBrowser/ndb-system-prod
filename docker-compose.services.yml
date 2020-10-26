@@ -1,7 +1,7 @@
 version: '3.1'
 services:
   sample-api:
-    image: mouselightdatabrowser/sample-api:1.4
+    image: mouselightdatabrowser/sample-api:1.5
     hostname: sample-api
     environment:
       NODE_ENV: production
@@ -14,7 +14,7 @@ services:
       - back_tier
 
   sample-client:
-    image: mouselightdatabrowser/sample-client:1.4
+    image: mouselightdatabrowser/sample-client:1.5
     hostname: sample-client
     environment:
       NODE_ENV: production
