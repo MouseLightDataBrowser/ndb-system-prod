@@ -140,7 +140,7 @@ services:
       - search-api
 
   static-api:
-    image: mouselightdatabrowser/static-resources:1.4
+    image: mouselightdatabrowser/static-resources:1.5
     hostname: static-api
     environment:
       NODE_ENV: production
