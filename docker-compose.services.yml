@@ -80,7 +80,7 @@ services:
       - back_tier
 
   transform-search:
-    image: mouselightdatabrowser/transform-search:1.6
+    image: mouselightdatabrowser/transform-search:1.4
     hostname: transform-search
     environment:
       NODE_ENV: production
