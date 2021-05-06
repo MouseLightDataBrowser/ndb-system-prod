@@ -155,7 +155,7 @@ services:
       - back_tier
 
   export-api:
-    image: mouselightdatabrowser/export-api:1.4
+    image: mouselightdatabrowser/export-api:1.6
     hostname: export-api
     environment:
       NODE_ENV: production
@@ -171,6 +171,7 @@ services:
     build:
       context: nginx-internal
       dockerfile: Dockerfile
+    platform: linux/amd64
     environment:
       API_KEY: "${AMPLIFY_API_KEY}"
       AMPLIFY_IMAGENAME:
@@ -190,6 +191,7 @@ services:
     build:
       context: nginx-team
       dockerfile: Dockerfile
+    platform: linux/amd64
     volumes:
       - "${MNB_LOG_VOLUME}:/var/log/mnb"
     ports:
