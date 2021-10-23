@@ -1,4 +1,4 @@
-!/usr/bin/env bash
+#!/usr/bin/env bash
 
 if [ -a "options.sh" ]; then
     source "options.sh"

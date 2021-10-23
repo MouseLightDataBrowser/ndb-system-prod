@@ -9,4 +9,3 @@ if [ -z "MNB_COMPOSE_PROJECT" ]; then
 fi
 
 docker-compose -f docker-compose.yml -f docker-compose.services.yml -p ${MNB_COMPOSE_PROJECT} up -d
-
