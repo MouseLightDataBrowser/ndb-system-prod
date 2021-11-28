@@ -4,83 +4,83 @@ services:
     image: influxdb:1.5
     hostname: metrics-db
     ports:
-    - 8086:8086
+      - 8086:8086
     volumes:
-    - influx_data:/var/lib/influxdb
-    - influx_config:/etc/influxdb
+      - influx_data:/var/lib/influxdb
+      - influx_config:/etc/influxdb
     networks:
-    - back_tier
+      - back_tier
 
   grafana:
     image: grafana/grafana:5.1.4
     hostname: grafana-metrics
     ports:
-    - 8087:3000
+      - 8087:3000
     environment:
       GF_AUTH_ANONYMOUS_ENABLED: 1
       GF_AUTH_ANONYMOUS_ORG_NAME: "Janelia"
     volumes:
-    - grafana_data:/var/lib/grafana
-    - grafana_config:/etc/grafana
-    - grafana_log:/var/log/grafana
+      - grafana_data:/var/lib/grafana
+      - grafana_config:/etc/grafana
+      - grafana_log:/var/log/grafana
     networks:
-    - back_tier
+      - back_tier
 
   sample-db:
     image: postgres:9
     hostname: sample-db
     ports:
-    - 5432:5432
+      - 5432:5432
     environment:
       PGDATA: /var/lib/postgresql/data/pgdata
       POSTGRES_PASSWORD: "${DATABASE_PW}"
     volumes:
-    - sample_data:/var/lib/postgresql/data
-    - ./datastore/sample:/docker-entrypoint-initdb.d
+      - sample_data:/var/lib/postgresql/data
+      - ./datastore/sample:/docker-entrypoint-initdb.d
     networks:
-    - back_tier
+      - back_tier
 
   swc-db:
     image: postgres:9
     hostname: swc-db
     ports:
-    - 5433:5432
+      - 5433:5432
     environment:
       PGDATA: /var/lib/postgresql/data/pgdata
       POSTGRES_PASSWORD: "${DATABASE_PW}"
     volumes:
-    - swc_data:/var/lib/postgresql/data
-    - ./datastore/swc:/docker-entrypoint-initdb.d
+      - swc_data:/var/lib/postgresql/data
+      - ./datastore/swc:/docker-entrypoint-initdb.d
     networks:
-    - back_tier
+      - back_tier
 
   transform-db:
     image: postgres:9
     hostname: transform-db
     ports:
-    - 5434:5432
+      - 5434:5432
     environment:
       PGDATA: /var/lib/postgresql/data/pgdata
       POSTGRES_PASSWORD: "${DATABASE_PW}"
     volumes:
-    - transform_data:/var/lib/postgresql/data
-    - ./datastore/transform:/docker-entrypoint-initdb.d
+      - transform_data:/var/lib/postgresql/data
+      - ./datastore/transform:/docker-entrypoint-initdb.d
     networks:
-    - back_tier
+      - back_tier
 
   search-db:
     image: postgres:9
     hostname: search-db
     ports:
-    - 5435:5432
+      - 5435:5432
     environment:
       PGDATA: /var/lib/postgresql/data/pgdata
       POSTGRES_PASSWORD: "${DATABASE_PW}"
     volumes:
-    - search_data:/var/lib/postgresql/data
-    - ./datastore/search:/docker-entrypoint-initdb.d
+      - search_data:/var/lib/postgresql/data
+      - ./datastore/search:/docker-entrypoint-initdb.d
     networks:
-    - back_tier
+      - back_tier
 
   search-public-db:
     image: postgres:9
@@ -96,6 +96,20 @@ services:
     networks:
       - back_tier
 
+  explorer-db:
+    image: postgres:14
+    hostname: explorer-db
+    ports:
+      - 5437:5432
+    environment:
+      PGDATA: /var/lib/postgresql/data/pgdata
+      POSTGRES_PASSWORD: "${DATABASE_PW}"
+    volumes:
+      - explorer_data:/var/lib/postgresql/data
+      - ./datastore/search-public:/docker-entrypoint-initdb.d
+    networks:
+      - back_tier
+
 volumes:
   influx_data:
   influx_config:
@@ -107,6 +121,7 @@ volumes:
   transform_data:
   search_data:
   search_public_data:
+  explorer_data:
 
 networks:
   back_tier:
