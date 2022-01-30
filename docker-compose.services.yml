@@ -92,7 +92,7 @@ services:
       - back_tier
 
   search-api:
-    image: mouselightdatabrowser/search-api:1.6
+    image: mouselightdatabrowser/search-api:1.7
     hostname: search-api
     environment:
       NODE_ENV: production
@@ -106,7 +106,7 @@ services:
       - back_tier
 
   search-internal-client:
-    image: mouselightdatabrowser/search-client:1.6
+    image: mouselightdatabrowser/search-client:1.7
     hostname: search-internal-client
     environment:
       NODE_ENV: production
@@ -123,7 +123,7 @@ services:
       - search-api
 
   search-team-client:
-    image: mouselightdatabrowser/search-client:1.6
+    image: mouselightdatabrowser/search-client:1.7
     hostname: search-team-client
     environment:
       NODE_ENV: production
@@ -140,7 +140,7 @@ services:
       - search-api
 
   static-api:
-    image: mouselightdatabrowser/static-resources:1.6
+    image: mouselightdatabrowser/static-resources:1.7
     hostname: static-api
     environment:
       NODE_ENV: production
@@ -155,7 +155,7 @@ services:
       - back_tier
 
   export-api:
-    image: mouselightdatabrowser/export-api:1.6
+    image: mouselightdatabrowser/export-api:1.7
     hostname: export-api
     environment:
       NODE_ENV: production
