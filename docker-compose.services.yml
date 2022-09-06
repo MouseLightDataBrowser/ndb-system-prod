@@ -92,7 +92,7 @@ services:
       - back_tier
 
   search-api:
-    image: mouselightdatabrowser/search-api:1.7.1
+    image: mouselightdatabrowser/search-api:1.6
     hostname: search-api
     environment:
       NODE_ENV: production
