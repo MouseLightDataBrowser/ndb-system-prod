@@ -14,7 +14,7 @@ services:
       - back_tier
 
   sample-client:
-    image: mouselightdatabrowser/sample-client:1.5
+    image: mouselightdatabrowser/sample-client:1.7
     hostname: sample-client
     environment:
       NODE_ENV: production
