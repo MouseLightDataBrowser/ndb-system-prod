@@ -53,7 +53,7 @@ services:
       - back_tier
 
   transform-api:
-    image: mouselightdatabrowser/transform-api:1.6
+    image: mouselightdatabrowser/transform-api:1.6.5
     hostname: transform-api
     environment:
       NODE_ENV: production
