@@ -171,7 +171,6 @@ services:
     build:
       context: nginx-internal
       dockerfile: Dockerfile
-    platform: linux/amd64
     environment:
       API_KEY: "${AMPLIFY_API_KEY}"
       AMPLIFY_IMAGENAME:
@@ -191,7 +190,6 @@ services:
     build:
       context: nginx-team
       dockerfile: Dockerfile
-    platform: linux/amd64
     volumes:
       - "${MNB_LOG_VOLUME}:/var/log/mnb"
     ports:
